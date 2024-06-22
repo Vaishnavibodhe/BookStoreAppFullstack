@@ -26,9 +26,8 @@ const URI=process.env.MongoDBURI;
 app.use(express.json());
 //mongdb connection
 try{
-mongoose.connect(URI,{
-    useNewUrlParser: true, useUnifiedTopology: true 
-});
+mongoose.connect(`mongodb://localhost:27017/bookStore`
+);
 console.log("connected to mongo");
 }catch(error){
 console.error("error");

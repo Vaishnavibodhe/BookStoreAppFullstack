@@ -3,7 +3,7 @@ import book from '/bookImage.avif';
 const Banner = () => {
   return (
    <>
-   <div className="max-w-screen flex container mx-auto md:px-5 px-2 ">
+   <div className="max-w-screen flex container mx-auto md:px-5 px-2 flex-col md:flex-row">
 <div className='  w-full order-2 md:order-1 md:w-1/2 mt-12 md:mt-36' >
     <div className="space-y-7">
     <h1 className=" text-3xl font-bold">
