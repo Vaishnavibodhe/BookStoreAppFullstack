@@ -1,45 +1,36 @@
-//const express=require("express"); if we do not use type:module then we can require like this
-//const dotenv=require("dotenv");
-
-//or like normal react importing
 import express from "express";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-import bookRoute from "./route/book.route.js";
+import dotenv from "dotenv";
 import cors from "cors";
+
+import bookRoute from "./route/book.route.js";
 import userRoute from "./route/user.route.js";
-import bodyParser from 'body-parser';
 
+const app = express();
 
-
-const app=express();
+app.use(cors());
+app.use(express.json());
 
 dotenv.config();
-app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+const PORT = process.env.PORT || 4000;
+const URI = process.env.MongoDBURI;
 
-const PORT=process.env.PORT || 4000;
-const URI=process.env.MongoDBURI;
-    
-app.use(express.json());
-//mongdb connection
-try{
-mongoose.connect(`mongodb://localhost:27017/bookStore`
-);
-console.log("connected to mongo");
-}catch(error){
-console.error("error");
+// connect to mongoDB
+try {
+    mongoose.connect(URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+    console.log("Connected to mongoDB");
+} catch (error) {
+    console.log("Error: ", error);
 }
 
+// defining routes
+app.use("/book", bookRoute);
+app.use("/user", userRoute);
 
-
-//define routes 
-app.use("/book" ,bookRoute);
-
-app.use("/user",userRoute);
-
-app.listen(PORT,()=>{
-    console.log("this is running")
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
